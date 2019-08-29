@@ -1,4 +1,4 @@
-package com.java.java_study;
+package com.java.java_study.algorithm;
 
 
 import lombok.Getter;
@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
+ * 调表是redis有序集合的实现之一 设计的原理是为了代替平衡树
+ * 有序集合查找需要实现区间的查找数据，在时间复杂度上跳表的实现要比红合数高效，直接从原始链表上往后遍历即可
+ * 实现灵活，比红黑树简单，构建索引有效平衡效率与内存消耗。
  * @author xcxu
  * @data 2019/8/27
  **/
@@ -26,6 +29,7 @@ public class SkipList<K extends Comparable<K>, V> {
             this.key = key;
             this.value = value;
         }
+
 
 
         @Override
@@ -48,6 +52,9 @@ public class SkipList<K extends Comparable<K>, V> {
 
     private Integer length = 0;
 
+    /**
+     * 抛硬币上升法
+     */
     private Random random = new Random(System.currentTimeMillis());
 
     public SkipList() {
@@ -77,6 +84,9 @@ public class SkipList<K extends Comparable<K>, V> {
 
         int currentLevel = 1;
         Node<K, V> oldTop = newNode;
+        /**
+         * 抛硬币上升法，大于50什么都不用处理，小于50则需要将该节点上升
+         */
         while (random.nextInt(100) < 50) {
             Node<K, V> newTop = new Node<>(newNode.getKey(), null);
 
@@ -206,8 +216,11 @@ public class SkipList<K extends Comparable<K>, V> {
         SkipList<Integer, String> skipList = new SkipList<>();
 
         skipList.put(2, "B");
+        skipList.put(2, "G");
+        skipList.put(2, "H");
         skipList.put(1, "A");
         skipList.put(3, "C");
+        skipList.put(6, "E");
 
         skipList.print();
 
