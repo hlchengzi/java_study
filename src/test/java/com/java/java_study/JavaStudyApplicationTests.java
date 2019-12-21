@@ -11,6 +11,8 @@ public class JavaStudyApplicationTests {
 
     @Test
     public void contextLoads() {
+
+        System.out.println("javaStudy");
     }
 
 }
